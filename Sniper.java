@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Knight extends Player{
+public class Sniper extends Player{
    
     public int dmg;
     private int hp;
@@ -9,8 +9,6 @@ public class Knight extends Player{
     private int level;
     private int item ;
     
-  
-
     public int Skill(){
         dmg = 20 ;
         exp = exp + 40;
@@ -22,7 +20,7 @@ public class Knight extends Player{
             
             exp = 0;
         }
-        System.out.println("BASH ATTACK DMG = 20 TO 5 MONSTER AND get damage 20 from monster get 5 exp per 1 one monster");
+        System.out.println("Arrow shower ATTACK DMG = 20 TO Five MONSTER AND get damage 20 from monster");
         return dmg;
     }
 }
