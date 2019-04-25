@@ -1,16 +1,15 @@
-
-import java.util.Scanner;
-import javax.swing.JOptionPane;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import javax.swing.JFrame;
- 
- 
- 
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.*;
+import java.util.concurrent.TimeUnit;
+import java.util.Random;
 
-public class App extends JFrame {
-
+public class App extends JFrame
+{
     Novice novice = new Novice();
     Career career = new Career();
     Item item = new Item();
@@ -26,35 +25,75 @@ public class App extends JFrame {
     int choose = 0;
     int dmg = 30,gem=0,sumgem=0;
     int MonsterC = 0, MonsterD = 0, MonsterDr = 0;
-    
-    public App() {
-        super("Java App Ragnarok");
-        initComponents();
-        
-    }
 
-                      
-    private void initComponents() {
-        
-        jPanel1 = new JPanel();
-        jPanel2 = new JPanel();
+    public App()
+    {
+        super("App java Ragnarok");
         btnUpgrade = new JButton();
         btnPlay = new JButton();
         btnStatus = new JButton();
         jScrollPane1 = new JScrollPane();
         txtStatus = new JTextArea();
-        jLabel2 = new JLabel();
-        jLabel1 = new JLabel();
         txtCareer = new JTextField();
         txtGem1 = new JTextField();
-        jLabel3 = new JLabel();
+        jLabel1 = new JLabel();
+
+       
+        Container c = getContentPane();
+        c.setLayout( new BorderLayout(10,10));
+
+        JPanel leftsize = new JPanel();
+        leftsize.setBorder(BorderFactory.createEmptyBorder(20, 15, 15, 0));
+        leftsize.setLayout(new BoxLayout(leftsize, BoxLayout.Y_AXIS));
+        JLabel pic1 = new JLabel(new ImageIcon("123456.png"));
+        JLabel career = new JLabel() ;
+        leftsize.add(pic1);
+        leftsize.add(career);
+
         
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+        JPanel header = new JPanel();
+        header.setBorder(BorderFactory.createEmptyBorder(15,200, 0, 0)); 
+        header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
 
-        jPanel2.setBackground(new Color(0, 0, 0));
+        String Head = new String("                                          Ragnarok Games");
+        JLabel head1 = new JLabel(Head,SwingConstants.CENTER);
+        header.add(head1);
 
-        btnUpgrade.setBackground(new Color(255, 255, 255));
+        JPanel states = new JPanel();
+        states.setLayout(new BoxLayout(states, BoxLayout.Y_AXIS));
+
+
+
+        
+
+        JPanel down = new JPanel();
+        down.setBorder(BorderFactory.createEmptyBorder(14, 14, 14, 14)); 
+        down.setLayout(new BoxLayout(down, BoxLayout.Y_AXIS));
+
+        
+        down.add(btnPlay);
+        btnPlay.setText("Play");
+        btnPlay.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt)
+            {
+                btnPlayMouseClicked(evt);
+            }
+        });
+
+        txtCareer.setBounds(40, 41, 144, 20);
+        getContentPane().add(txtCareer);
+
+        
+        txtGem1.setBounds(270, 230, 140, 20);
+        getContentPane().add(txtGem1);
+
+        jScrollPane1.setBounds(250, 39, 300, 180);
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setViewportView(txtStatus);
+
+        
+        btnUpgrade.setPreferredSize(btnPlay.getPreferredSize());
+        down.add(btnUpgrade);
         btnUpgrade.setText("Weapon Upgrade");
         btnUpgrade.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
@@ -62,127 +101,36 @@ public class App extends JFrame {
             }
         });
 
-        btnPlay.setBackground(new Color(255, 255, 255));
-        btnPlay.setText("Play");
-        btnPlay.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent evt) {
-                btnPlayMouseClicked(evt);
-            }
-        });
-
+        btnStatus.setPreferredSize(btnPlay.getPreferredSize());
+        down.add(btnStatus);
         btnStatus.setBackground(new Color(255, 255, 255));
-        btnStatus.setText("Player");
+        btnStatus.setText("Status Player");
         btnStatus.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 btnStatusMouseClicked(evt);
             }
         });
 
-        txtStatus.setBackground(new Color(255, 255, 255));
-        txtStatus.setColumns(20);
-        txtStatus.setRows(5);
-        jScrollPane1.setViewportView(txtStatus);
+        jLabel1.setForeground(new Color(0, 0, 0));
+        jLabel1.setText("Gems");
+        jLabel1.setBounds(230, 150, 150, 180);
+        getContentPane().add(jLabel1);
+        
 
-        jLabel2.setForeground(new Color(255, 255, 0));
-        jLabel2.setText("Status Player\n");
 
-        jLabel1.setForeground(new Color(255, 255, 0));
-        jLabel1.setText("Career");
+       
 
-        jLabel3.setForeground(new Color(255, 255, 0));
-        jLabel3.setText("Gems");
+        c.add(header,BorderLayout.NORTH);
+        c.add(states,BorderLayout.CENTER);
+        c.add(down,BorderLayout.SOUTH);
+        c.add(leftsize,BorderLayout.WEST);
+        //c.add(pic,BorderLayout.SOUTH);
 
-        GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(213, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(161, 161, 161))
-            .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(39, 39, 39)
-                    .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel2)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtCareer, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
-                            .addGap(39, 39, 39)
-                            .addComponent(txtGem1, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(10, 10, 10)
-                            .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                .addComponent(btnStatus, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(btnPlay, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-                                    .addGap(26, 26, 26)
-                                    .addComponent(btnUpgrade))
-                                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 311, GroupLayout.PREFERRED_SIZE))))
-                    .addContainerGap(40, Short.MAX_VALUE)))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addContainerGap(337, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(txtGem1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txtCareer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-                    .addGap(18, 18, 18)
-                    .addComponent(jLabel2)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnUpgrade, GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
-                        .addComponent(btnPlay, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(btnStatus, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-
-        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        pack();
-        setLocationRelativeTo(null);
-    }// </editor-fold>                        
- public void DropGem(){
-       gem=738+(int)(Math.random()*(6312));
-       sumgem+=gem;
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(700,400);
+        setVisible(true);
     }
-    public void powerup() {
-        dmg += 100;
-        novice.FullHeal();
-        power += 1;
-    }
+
     private void btnUpgradeMouseClicked(MouseEvent evt) {                                        
 
         if(choose!=0){
@@ -237,32 +185,8 @@ public class App extends JFrame {
                 + "please get more EXP","System Message", JOptionPane.WARNING_MESSAGE);
         }
 
-    }                                       
-public void Career() {
+    }  
 
-        if (choose == 1) {
-            career.SelectCareerS();
-            txtCareer.setText("You Career: Sword");
-            dmg += novice.Dmg() + 100 - 30;
-       
-            
-        } else if (choose == 2) {
-            career.SelectCareerM();
-            txtCareer.setText("You Career: Melee");
-            dmg += novice.Dmg() + 70 - 30;
-            
-            
-        } else {
-
-            txtCareer.setText("You Career: Free");
-           
-        }
-    }
- public void Set(){
-     LV++;
-     Damage+=100*LV;
-    
-    }
     private void btnPlayMouseClicked(MouseEvent evt) {                                     
 
         if (novice.getlevel() < 5) {
@@ -398,7 +322,7 @@ public void Career() {
             JOptionPane.showMessageDialog(this, "You Dead");
             System.exit(0);
         }
-    }                                    
+    } 
 
     private void btnStatusMouseClicked(MouseEvent evt) {                                       
         String input;
@@ -418,48 +342,57 @@ public void Career() {
             + "1.Healing :" + heal + "\n2.Powerup :" + Powerup + "\n3.Vanish :" + Vanish + "\n-----Monster Your Kill-----\n"
             + "CatDevil :" + MonsterC + "\nDog TreeHead :" + MonsterD + "\nDragon :" + MonsterDr);
         
-    }                                      
+    }            
 
-   
-    public static void main(String args[]) {
-        new App();
+    public void Set(){
+        LV++;
+        Damage+=100*LV;
        
-        try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+       }
+
+       public void Career() {
+
+        if (choose == 1) {
+            career.SelectCareerS();
+            txtCareer.setText("You Career: Sword");
+            dmg += novice.Dmg() + 100 - 30;
+       
+            
+        } else if (choose == 2) {
+            career.SelectCareerM();
+            txtCareer.setText("You Career: Melee");
+            dmg += novice.Dmg() + 70 - 30;
+            
+            
+        } else {
+
+            txtCareer.setText("You Career: Free");
+           
         }
-        
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new App().setVisible(true); 
-                
-            }
-        });
     }
-                   
+
+    public void DropGem(){
+        gem=738+(int)(Math.random()*(6312));
+        sumgem+=gem;
+     }
+
+     public void powerup() {
+        dmg += 100;
+        novice.FullHeal();
+        power += 1;
+    }
+
     private JButton btnPlay;
     private JButton btnStatus;
     private JButton btnUpgrade;
     private JLabel jLabel1;
-    private JLabel jLabel2;
-    private JLabel jLabel3;
-    private JPanel jPanel1;
-    private JPanel jPanel2;
+
     private JScrollPane jScrollPane1;
     private JTextField txtCareer;
     private JTextField txtGem1;
     private JTextArea txtStatus;
-    // End of variables declaration                   
+
+    public static void main(String[] args) {
+        new App();
+    }
 }
