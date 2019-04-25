@@ -1,61 +1,20 @@
+
+
 import java.io.*;
 import java.util.*;
-public class Novice
-{
+
+public class Novice {
+    Bag bag = new Bag();
+    Monster mons =new Monster();
     private int hp;
     private int exp;
     private int level;
     private int item ;
-    ArrayList<String> skillList;
+    private int killed;
     public int dmg;
-    public int dmg2;
-    public Novice()
-    {
-        level = 1;
-        hp = 100;
-        exp = 0;
-      
-    }
-    public int Skill(){
-        dmg = 20 ;
-        exp = exp + 45;
-        hp = hp - 20;
-        if (exp >= 100)
-        {   
-            level = level+1;
-            hp = 100;
-            
-            exp = 0;
-        }
-        System.out.println("BASH ATTACK DMG = 20 TO 5 MONSTER AND get damage 20 from monster get 5 exp per 1 one monster");
-        return dmg;
-    }
-
-    public void attack() //Attack and recieve exp and damagetome from monster
-    {   
-    
-        exp = exp + 12;
-        hp = hp - 10;
-        if (exp >= 100)
-        {   
-            level = level+1;
-            hp = 100;
-            
-            exp = 0;
-        }
-    }
-   
-   
-
-
-    public void heal()
-    { 
-         hp = hp + 10;
-
-        if(hp > 100){
-                hp = 100;}
-        
-    }
+    public int Upgrade;
+    public int gems;
+    private String carreername;
     
 
     public int gethp()
@@ -70,41 +29,150 @@ public class Novice
     {
         return level;
     }
- 
-    public int useSkill(int select){
-        dmg = 20 ;
-        dmg2= 30 ;
-        if(select==1){
-                System.out.println("Fire Ball Active");
-                return dmg;
-        }
-        if(select==2){
-                System.out.println("Meteo Strom Active");
-                return dmg2;
-        }
-        return 0;
+
+    public int gem()
+    {
+        return gems;
+    }
+  
+    public int getkill(){
+        return killed;
     }
 
-  
-    public static void main(String args[])
-    {
-        Novice novice = new Novice();
-        
-        System.out.println("Your HP: "+ novice.gethp());
-        System.out.println("Your EXP: "+ novice.getexp());
-        System.out.println("Your LV: "+ novice.getlevel());
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("------------");
-        while(novice.gethp() != 0){
-System.out.println("Choose 1 for ATK / Choose 2 Heal from Potion ");
-            int bottom = scanner.nextInt();
-            if(bottom == 1) novice.attack();
-            else if(bottom == 2) novice.heal();
-            System.out.println("Your HP: "+ novice.gethp());
-            System.out.println("Your EXP: "+ novice.getexp());
-            System.out.println("Your LV: "+ novice.getlevel());
-            System.out.println("------------");
-        }
-        System.out.println("Your die");
+    public Novice()
+    {   
+        dmg = 30;
+        level =5;
+        hp = 100;
+        exp = 0;
+        gems=0;
     }
+    public int Dmg(){
+    return dmg;
+    }
+    public int CareerDmgS(){
+       dmg = dmg+70;
+        return dmg;
+    }
+    public int giveLv(){
+
+    
+
+    level = 6;
+    
+    return level;
+    }
+    public int CareerDmgM(){
+       dmg = dmg+50;
+        return dmg;
+    }
+    public  int attackDragon() //Attack and recieve exp and damagetome from monster
+    {    int sum = 0; 
+        
+       while(sum>0){
+       sum = mons.getDragon()-dmg;
+       mons.setDragon(sum);
+     
+       }
+       if (sum == 0){
+          exp =exp+25;
+          hp =hp-25;
+          if(exp>=100*level){
+            level = level+1;
+            hp = 100;
+            exp = 0;
+                  }
+       }
+        return sum;
+    }
+public  int attackDog() //Attack and recieve exp and damagetome from monster
+    {    int sum = 0; 
+       while(sum>0){
+       sum = mons.getTreeHeadDog()-dmg;
+       mons.setTreeHeadDog(sum);
+      
+       }
+       if (sum == 0){
+          exp =exp+9*3;
+          hp =hp-9*3;
+          if(exp>=100*level){
+            level = level+1;
+            hp = 100;
+            exp = 0;
+                  }
+       }
+        return sum;
+    }
+    public  int attackCat() //Attack and recieve exp and damagetome from monster
+    {    int sum = 0; 
+         
+       while(sum>0){
+       sum = mons.getCatDevil()-dmg;
+       mons.setCatDevil(sum);
+       
+       }
+       if (sum == 0){
+          exp =exp+7*2;
+          hp =hp-7*2;
+          if(exp>=100*level){
+            level = level+1;
+            hp = 100;
+            exp = 0;
+                  }
+       }
+        return sum;
+    }
+public void vinish(){
+    
+  exp = exp +bag.getVanish();
+  if (exp >= 100*level)
+        {   
+            level = level+1;
+            hp = 100;
+            
+            exp = 0;
+        }
 }
+public void powerup(){
+    
+  dmg = dmg+100;
+  hp = 100;
+  if (exp >= 100*level)
+        {   
+            level = level+1;
+            hp = 100;
+            
+            exp = 0;
+        }
+}
+public void FullHeal(){
+   hp=100;
+
+}
+public void heal()
+    {  
+         hp = hp + bag.getHealing();
+         if(hp > 100){
+                hp = 100;}
+        
+    } 
+
+    
+public void ShowStatus(){
+    Novice novice = new Novice();
+   
+    Item item = new Item();
+    int x=100;
+    System.out.println("-----Novice Data-----");
+    System.out.println("Your HP: "+ novice.gethp());
+    System.out.println("Your EXP: "+ novice.getexp()+"/"+x*novice.getlevel());
+    System.out.println("Your LV: "+ novice.getlevel());
+    
+    
+
+}
+
+
+
+}
+    
